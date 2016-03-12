@@ -3,30 +3,34 @@ class BlinkyWorkday
   def initialize(blinky_paxos, start_time, end_time)
     @start_time = start_time
     @end_time   = end_time
-    @blinky_paxos = blinky_paxos
+    @b = blinky_paxos
 
    end
 
   def loop
     while true
       now = DateTime.now.to_time.to_i
+     #now = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 18, 35, 00, '-08:00').to_time.to_i
       e = @end_time - @start_time
       now = now - @start_time
 
       p = (now.to_f / e.to_f) * 60
-      if p < 0
-        p = 0
+      return if p < 0
+      if p > 59
+        p = 59
       end
 
-      for index in 0..(p.to_i-1)
-        @blinky_paxos.data[index] = Color::RGB.by_name('red')
-      end
+      c = Color::RGB.new
+      c.red = rand(255)
+      c.green = rand(255)
+      c.blue = rand(255)
 
-      for index in p.to_i..(60)
-        @blinky_paxos.data[index] = Color::RGB.by_name('black')
-      end
+      (0..(p.to_i-1)).each { |index|
+        @b.data[index] = Color::RGB.by_name('red').adjust_brightness(-80)
+      }
+      @b.data[p.to_i] = c
 
-      @blinky_paxos.update
+      @b.show
       sleep(1)
     end
   end
