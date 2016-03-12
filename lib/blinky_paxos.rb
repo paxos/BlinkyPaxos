@@ -32,6 +32,7 @@ class BlinkyPaxos
     @tape.show
   end
 
+  # TODO: this overwrites pixels yet
   def add_animation(start, target, time)
     @animations << {
         :start => start,
@@ -74,6 +75,15 @@ class BlinkyPaxos
       self.data[position+index] = color(color).adjust_brightness(-10*index)
       self.data[position-index] = color(color).adjust_brightness(-15*index)
     end
+    self.show
+  end
+
+  def set_percentage(color, percentage, background_color = 'black', reverse = false)
+    max = ((@tape.led_count.to_f / 100) * percentage).round - 1
+    @data.collect! { color(background_color) }
+    (0..max).each { |index|
+      @data[index] = color(color)
+    }
     self.show
   end
 end

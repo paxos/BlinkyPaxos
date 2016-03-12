@@ -10,8 +10,8 @@ require_relative 'lib/blinky_workday'
 def test_workday
   p = BlinkyPaxos.new
 
-  start_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 18, 00, 0, '-08:00').to_time.to_i
-  end_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 19, 00, 0, '-08:00').to_time.to_i
+  start_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 22, 49, 0, '-08:00').to_time.to_i
+  end_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 22, 50, 0, '-08:00').to_time.to_i
 
   w = BlinkyWorkday.new(p, start_time, end_time)
   while true
@@ -87,10 +87,10 @@ def test_animation
   #p.brightness = -90
 
   p.data[0] = p.color('green')
- # p.data[59] = p.color('red')
+  p.data[59] = p.color('red')
 
   p.add_animation(0, 59, 1)
- # p.add_animation(59, 0, 1)
+  p.add_animation(59, 0, 1)
 
   while true
     p.process(true)
@@ -107,4 +107,49 @@ def test_spot_pixel
   p.close
 end
 
-test_spot_pixel
+def test_set_percentage
+  p = BlinkyPaxos.new
+
+  p.set_percentage('red', 0)
+  sleep(0.1)
+
+  p.set_percentage('red', 10)
+  sleep(0.1)
+  # p.set_percentage('red', 1)
+  # sleep(0.1)
+  # p.set_percentage('red', 2)
+  # sleep(0.1)
+  # p.set_percentage('red', 50)
+  # sleep(0.1)
+  # p.set_percentage('red', 95)
+  # sleep(0.1)
+  # p.set_percentage('red', 98)
+  sleep(1)
+  p.set_percentage('red', 100)
+  sleep(1)
+  p.set_percentage('red', 50)
+  # sleep(0.1)
+  p.close
+end
+
+NUMBER_OF_CORES = 8
+def cpu_usage
+  p = BlinkyPaxos.new
+  while true
+    usage = `ps -A -o %cpu | awk '{s+=$1} END {print s}'`
+    usage = usage.strip.to_i / NUMBER_OF_CORES
+
+    value = usage
+
+    color = Color::RGB.by_name('red').mix_with(Color::RGB.by_name('green'), value)
+    p.set_percentage(color, value)
+    #sleep 0.5
+  end
+  p.close
+end
+
+def test_cpu_usage
+  cpu_usage
+end
+
+cpu_usage

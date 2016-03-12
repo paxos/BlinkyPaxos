@@ -26,7 +26,7 @@ class BlinkyWorkday
       c.blue = rand(255)
 
       (0..(p.to_i-1)).each { |index|
-        @b.data[index] = Color::RGB.by_name('red').adjust_brightness(-80)
+        @b.data[index] = Color::RGB.by_name('green').adjust_brightness(-80)
       }
       @b.data[p.to_i] = c
 
