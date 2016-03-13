@@ -1,8 +1,10 @@
 class BlinkyWorkday
 
-  def initialize(blinky_paxos, start_time, end_time)
+  def initialize(blinky_paxos, start_time, end_time, break_start, break_end)
     @start_time = start_time
     @end_time   = end_time
+    @break_start= break_start
+    @break_end  = break_end
     @b = blinky_paxos
 
    end

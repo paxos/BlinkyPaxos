@@ -6,6 +6,7 @@ require 'date'
 
 require_relative 'lib/blinky_paxos.rb'
 require_relative 'lib/blinky_workday'
+require_relative 'lib/blinky_rainbow'
 
 def test_workday
   p = BlinkyPaxos.new
@@ -152,4 +153,18 @@ def test_cpu_usage
   cpu_usage
 end
 
-cpu_usage
+
+def test_rainbow
+  p = BlinkyPaxos.new
+  #p.brightness = -80
+  r = BlinkyRainbow.new(p)
+
+  i = 0
+  while true
+    r.process
+    p.show
+  end
+
+
+end
+test_rainbow
