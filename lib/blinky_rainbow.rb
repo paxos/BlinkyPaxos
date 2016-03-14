@@ -1,11 +1,16 @@
 class BlinkyRainbow
 
+  require 'color'
+  require_relative 'blinky_paxos.rb'
+
   RAINBOW_COLOR_LENGTH = 20 # Rainbow Resolution
   NUMBER_OF_RAINBOW_COLORS = 8
-  PIXEL_OFFSET = 20 #
+
+  attr_accessor :pixel_offset
 
   def initialize(blinky_paxos)
     @blinky_paxos = blinky_paxos
+    @pixel_offset = 15 # Rainbow Offset of each Pixel
     @rainbow_colors = [
         @blinky_paxos.color(Color::RGB.by_name('red')),
         @blinky_paxos.color(Color::RGB.by_name('orange')),
@@ -41,7 +46,7 @@ class BlinkyRainbow
     @frame = @frame + 1
 
     @blinky_paxos.data.each_index { |index|
-      @blinky_paxos.data[index] = @rainbow.rotate(@frame+(index*PIXEL_OFFSET))[0]
+      @blinky_paxos.data[index] = @rainbow.rotate(@frame+(index*@pixel_offset))[0]
     }
   end
 

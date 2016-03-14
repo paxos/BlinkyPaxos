@@ -3,6 +3,7 @@
 require 'BlinkyTape'
 require 'color'
 require 'date'
+require 'active_support/all' # Make x.days.ago available
 
 require_relative 'lib/blinky_paxos.rb'
 require_relative 'lib/blinky_workday'
@@ -11,17 +12,26 @@ require_relative 'lib/blinky_rainbow'
 def test_workday
   p = BlinkyPaxos.new
 
-  start_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 22, 49, 0, '-08:00').to_time.to_i
-  end_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 22, 50, 0, '-08:00').to_time.to_i
+  #start_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 22, 49, 0, '-08:00').to_time.to_i
+  #end_time = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 22, 50, 0, '-08:00').to_time.to_i
 
-  w = BlinkyWorkday.new(p, start_time, end_time)
+  start_time = 5.seconds.from_now
+  break_start = 15.seconds.from_now
+  break_end = 20.seconds.from_now
+  end_time = 25.seconds.from_now
+
+  w = BlinkyWorkday.new(p, start_time, end_time, break_start, break_end)
   while true
     w.loop
     sleep 1
   end
-
   p.close
 end
+
+test_workday
+
+
+
 
 def test_solid_color
   p = BlinkyPaxos.new
@@ -161,10 +171,12 @@ def test_rainbow
 
   i = 0
   while true
+    i += 0.001
+    r.pixel_offset = i % 20
+
     r.process
     p.show
   end
-
-
 end
-test_rainbow
+#test_rainbow
+
