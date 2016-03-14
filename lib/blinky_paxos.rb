@@ -6,7 +6,7 @@ class BlinkyPaxos
   attr_reader :led_count
 
   def initialize
-    @tape = BlinkyTape.new('/dev/tty.usbmodem1421')
+    @tape = BlinkyTape.new('/dev/tty.usbmodem40131')
     @brightness = 0
     @led_count = @tape.led_count
     @data = Array.new(60)

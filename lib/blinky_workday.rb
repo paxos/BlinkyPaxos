@@ -30,7 +30,8 @@ class BlinkyWorkday
         if now > @start_time && now < @break_start
           # Before Break
           p = time_diff_to_p(now, @start_time, @break_start)
-          @b.brightness = (100-p)*-1
+          #@b.brightness = (100-p)*-1
+          @b.brightness = 0
           @b.set_percentage('red', 'green', p)
         end
 
@@ -43,7 +44,7 @@ class BlinkyWorkday
         if now > @start_time && now > @break_end && now < @end_time
           # After Break
           p = time_diff_to_p(now, @break_end, @end_time)
-          @b.brightness = (100-p)*-1
+          @b.brightness = 0
           @b.set_percentage('red', 'green', p)
         end
 
