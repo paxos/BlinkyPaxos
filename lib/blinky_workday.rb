@@ -19,26 +19,31 @@ class BlinkyWorkday
 
       if now < @start_time
         # Before work
+        @b.brightness = -90
         @rainbow.process
       end
 
       if now > @start_time && now < @break_start
         # Before Break
+        @b.brightness = 0
         @b.set_percentage('red', time_diff_to_p(now, @start_time, @break_start))
       end
 
       if now > @start_time && now > @break_start && now < @break_end
         # During break
+        @b.brightness = 0
         @rainbow.process
       end
 
-      if now > @start_time && now > @break_end
+      if now > @start_time && now > @break_end && now < @end_time
         # After Break
+        @b.brightness = 0
         @b.set_percentage('red', time_diff_to_p(now, @break_end, @end_time))
       end
 
       if now > @end_time
         # After Work
+        @b.brightness = -90
         @rainbow.process
       end
 

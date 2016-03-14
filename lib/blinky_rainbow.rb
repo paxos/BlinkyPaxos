@@ -39,14 +39,12 @@ class BlinkyRainbow
     while @rainbow.count < @blinky_paxos.led_count
       @rainbow.concat(@rainbow)
     end
-    #@blinky_paxos.data.each_index { |index| @blinky_paxos.data[index] = @rainbow[index] }
   end
 
   def process
     @frame = @frame + 1
-
     @blinky_paxos.data.each_index { |index|
-      @blinky_paxos.data[index] = @rainbow.rotate(@frame+(index*@pixel_offset))[0]
+      @blinky_paxos.data[index] = @blinky_paxos.color(@rainbow.rotate(@frame+(index*@pixel_offset))[0])
     }
   end
 
