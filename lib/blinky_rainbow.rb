@@ -4,13 +4,14 @@ class BlinkyRainbow
   require_relative 'blinky_paxos.rb'
 
   RAINBOW_COLOR_LENGTH = 20 # Rainbow Resolution
-  NUMBER_OF_RAINBOW_COLORS = 8
+  NUMBER_OF_RAINBOW_COLORS = 7
 
   attr_accessor :pixel_offset
 
   def initialize(blinky_paxos)
     @blinky_paxos = blinky_paxos
-    @pixel_offset = 15 # Rainbow Offset of each Pixel
+    @pixel_offset = 10 # Rainbow Offset of each Pixel
+
     @rainbow_colors = [
         @blinky_paxos.color(Color::RGB.by_name('red')),
         @blinky_paxos.color(Color::RGB.by_name('orange')),
@@ -18,8 +19,7 @@ class BlinkyRainbow
         @blinky_paxos.color(Color::RGB.by_name('green')),
         @blinky_paxos.color(Color::RGB.by_name('blue')),
         @blinky_paxos.color(Color::RGB.by_name('indigo')),
-        @blinky_paxos.color(Color::RGB.by_name('violet')),
-        @blinky_paxos.color(Color::RGB.by_name('white'))
+        @blinky_paxos.color(Color::RGB.by_name('violet'))
     ]
     @frame = 0.0
     @rainbow = Array.new(RAINBOW_COLOR_LENGTH*NUMBER_OF_RAINBOW_COLORS)

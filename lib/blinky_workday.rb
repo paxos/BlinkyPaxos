@@ -15,36 +15,43 @@ class BlinkyWorkday
   def loop
     while true
       now = DateTime.now
-     #now = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 18, 35, 00, '-08:00').to_time.to_i
+      #now = DateTime.new(DateTime.now.year, DateTime.now.month, DateTime.now.day, 18, 35, 00, '-08:00').to_time.to_i
 
-      if now < @start_time
-        # Before work
-        @b.brightness = -90
-        @rainbow.process
-      end
+      if now.saturday? || now.sunday?
+        @b.set_color('black')
+      else
 
-      if now > @start_time && now < @break_start
-        # Before Break
-        @b.brightness = 0
-        @b.set_percentage('red', time_diff_to_p(now, @start_time, @break_start))
-      end
+        if now < @start_time
+          # Before work
+          @b.brightness = -70
+          @rainbow.process
+        end
 
-      if now > @start_time && now > @break_start && now < @break_end
-        # During break
-        @b.brightness = 0
-        @rainbow.process
-      end
+        if now > @start_time && now < @break_start
+          # Before Break
+          p = time_diff_to_p(now, @start_time, @break_start)
+          @b.brightness = (100-p)*-1
+          @b.set_percentage('red', 'green', p)
+        end
 
-      if now > @start_time && now > @break_end && now < @end_time
-        # After Break
-        @b.brightness = 0
-        @b.set_percentage('red', time_diff_to_p(now, @break_end, @end_time))
-      end
+        if now > @start_time && now > @break_start && now < @break_end
+          # During break
+          @b.brightness = 0
+          @rainbow.process
+        end
 
-      if now > @end_time
-        # After Work
-        @b.brightness = -90
-        @rainbow.process
+        if now > @start_time && now > @break_end && now < @end_time
+          # After Break
+          p = time_diff_to_p(now, @break_end, @end_time)
+          @b.brightness = (100-p)*-1
+          @b.set_percentage('red', 'green', p)
+        end
+
+        if now > @end_time
+          # After Work
+          @b.brightness = -70
+          @rainbow.process
+        end
       end
 
       @b.show

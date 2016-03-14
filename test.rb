@@ -28,7 +28,7 @@ def test_workday
   p.close
 end
 
-test_workday
+
 
 
 
@@ -121,10 +121,10 @@ end
 def test_set_percentage
   p = BlinkyPaxos.new
 
-  p.set_percentage('red', 0)
+  p.set_percentage('red', 'red', 0)
   sleep(0.1)
 
-  p.set_percentage('red', 10)
+  p.set_percentage('red', 'red', 10)
   sleep(0.1)
   # p.set_percentage('red', 1)
   # sleep(0.1)
@@ -136,9 +136,9 @@ def test_set_percentage
   # sleep(0.1)
   # p.set_percentage('red', 98)
   sleep(1)
-  p.set_percentage('red', 100)
+  p.set_percentage('red', 'red', 100)
   sleep(1)
-  p.set_percentage('red', 50)
+  p.set_percentage('red', 'red', 50)
   # sleep(0.1)
   p.close
 end
@@ -153,7 +153,7 @@ def cpu_usage
     value = usage
 
     color = Color::RGB.by_name('red').mix_with(Color::RGB.by_name('green'), value)
-    p.set_percentage(color, value)
+    p.set_percentage(color, color, value)
     #sleep 0.5
   end
   p.close
@@ -172,11 +172,12 @@ def test_rainbow
   i = 0
   while true
     i += 0.001
-    r.pixel_offset = i % 20
+   # r.pixel_offset = i % 20
 
     r.process
     p.show
   end
 end
-#test_rainbow
 
+#test_rainbow
+#test_workday

@@ -78,11 +78,15 @@ class BlinkyPaxos
     self.show
   end
 
-  def set_percentage(color, percentage, background_color = 'black', reverse = false)
+  def set_percentage(color, end_color, percentage, background_color = 'black', reverse = false)
     max = ((@tape.led_count.to_f / 100) * percentage).round - 1
     @data.collect! { color(background_color) }
+
+    color = Color::RGB.by_name(color)
+    end_color = Color::RGB.by_name(end_color)
+
     (0..max).each { |index|
-      @data[index] = color(color)
+      @data[index] = color(end_color.mix_with(color, percentage))
     }
     self.show
   end
