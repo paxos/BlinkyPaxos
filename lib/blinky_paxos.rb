@@ -41,9 +41,14 @@ class BlinkyPaxos
     }
   end
 
+  # TODO: fix animations at all
   def process(show = true)
     self.animations.each do |animation|
-      next if animation[:target] == animation[:start]
+
+      if animation[:target] == animation[:start]
+        # TODO:hack
+        self.data[animation[:start]] = color('black')
+      end
 
       if animation[:target] > animation[:start]
         tmp = self.data[animation[:start]+1]

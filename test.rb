@@ -97,6 +97,23 @@ def test_animation
   p = BlinkyPaxos.new
   #p.brightness = -90
 
+  while true
+    if (rand(100) > 98)
+      p.data[0] = Color::RGB.new(rand(255), rand(255), rand(255))
+      p.add_animation(0, 59, 1)
+    end
+
+    p.process(true)
+    #   sleep 0.01
+  end
+
+  p.close
+end
+
+def random_animation
+  p = BlinkyPaxos.new
+  #p.brightness = -90
+
   p.data[0] = p.color('green')
   p.data[59] = p.color('red')
 
@@ -105,7 +122,7 @@ def test_animation
 
   while true
     p.process(true)
- #   sleep 0.01
+    #   sleep 0.01
   end
 
   p.close
@@ -171,13 +188,13 @@ def test_rainbow
 
   i = 0
   while true
-    i += 0.001
-   # r.pixel_offset = i % 20
+    i += 0.05
+    r.pixel_offset = i % 20
 
     r.process
     p.show
   end
 end
 
-#test_rainbow
+test_animation
 #test_workday
