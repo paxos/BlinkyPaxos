@@ -88,7 +88,7 @@ class BlinkyPaxos
     @data.collect! { color(background_color) }
 
     color = Color::RGB.by_name(color) if color.class != Color::RGB
-    end_color = Color::RGB.by_name(end_color) if color.class != Color::RGB
+    end_color = Color::RGB.by_name(end_color) if end_color.class != Color::RGB
 
     (0..max).each { |index|
       @data[index] = color(end_color.mix_with(color, percentage))
