@@ -196,5 +196,8 @@ def test_rainbow
   end
 end
 
-test_animation
+test_rainbow
+#test_animation
 #test_workday
+
+#test_cpu_usage

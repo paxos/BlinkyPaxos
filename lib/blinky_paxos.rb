@@ -4,9 +4,10 @@ require 'color'
 class BlinkyPaxos
   attr_accessor :data, :animations, :brightness
   attr_reader :led_count
+  MODEM_PATH = '/dev/tty.usbmodem40131'
 
   def initialize
-    @tape = BlinkyTape.new('/dev/tty.usbmodem40131')
+    @tape = BlinkyTape.new(MODEM_PATH)
     @brightness = 0
     @led_count = @tape.led_count
     @data = Array.new(60)
@@ -15,6 +16,10 @@ class BlinkyPaxos
 
     # clear to black
     self.show
+  end
+
+  def self.tape_available?
+    File.exist?(MODEM_PATH)
   end
 
   def close
